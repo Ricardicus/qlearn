@@ -1,2 +1,5 @@
 # for huge Qvalue files
 learning/*
+.DS_Store
+*/.DS_Store
+*.pyc
