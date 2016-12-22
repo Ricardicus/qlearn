@@ -1,7 +1,7 @@
 # qlearn
 Reinforcement learning in python
 
-Using Q-learning to train an agent to play the game 'Snake'
+Using tabular Q learning to train an agent to play the game 'Snake'
 
 # set up
 Clone this repository and run the program 'training.py'.
