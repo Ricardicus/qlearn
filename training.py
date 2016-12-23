@@ -18,7 +18,7 @@ episode_count = 1
 episode_score = 0
 
 store_every = 100
-store_info_every = 20
+store_info_every = 1
 
 avg_score_hundred = []
 explored = []
@@ -141,58 +141,19 @@ def timerFired(data):
 
 		print "episode: ", episode_count, " score: ", data["score"], " avg score over 100: ", sum(avg_score_hundred) / (1.0*len(avg_score_hundred)), " states: ", len(Q_vals)
 
-		episode_count += 1
-		start_new_episode(data)
 		if ( episode_count % store_info_every == 0):
 			f = open('info.txt', "w")
 			f.write("episode: " + str(episode_count) + " score: " + str(data["score"]) + " avg score over 100: " + str(sum(avg_score_hundred) / (1.0*len(avg_score_hundred))) + " states: " + str(len(Q_vals)))
 			f.close()
+
+		episode_count += 1
+		start_new_episode(data)
 
 		if (episode_count % store_every == 0):
 			store_Q_vals(Q_vals)
 			root.quit()
 		else:
 			data["canvas"].after(update_time, timerFired, data)
-
-def redrawAll(data):
-    # Drawing everything again! Called by the game loop after snakes have been moved.
-    canvas = data["canvas"]
-    canvas.delete(ALL)
-    drawSnakeBoard(data)
-    if (data["isGameOver"] == True):
-        print "goodbye!"
-
-def drawSnakeCell(data, row, col):
-    # Drawing cells onto the snakeboard on the screen. 
-    # The content of the snakeboard matrix determines the color drawed.
-    margin = data["margin"]
-    cellSize = data["cellSize"]
-    dimension = data["dimension"]
-    canvas = data["canvas"]
-    snakeBoard = data["snakeBoard"]
-
-    left = margin + col * cellSize
-    right = left + cellSize
-    top = margin + row * cellSize
-    bottom = top + cellSize
-#    canvas.create_rectangle(left, top, right, bottom, fill="white")
-    if ( row == 0 or row == dimension - 1 or col == dimension - 1 or col == 0 ):
-        canvas.create_rectangle(left, top, right, bottom, fill="black")
-    elif ((snakeBoard[row][col] > 0) and (snakeBoard[row][col] < 100)):
-        # draw part of the "cyan" colored snake
-        canvas.create_oval(left, top, right, bottom, fill="cyan")
-    elif (snakeBoard[row][col] < 0):
-        # drawing food item
-        canvas.create_oval(left, top, right, bottom, fill="green")
-
-def drawSnakeBoard(data):
-    # the call for drawing the snakeboard onto the screen!
-    dimension = data["dimension"]
-    canvas = data["canvas"]
-
-    for row in range(dimension):
-        for col in range(dimension):
-            drawSnakeCell(data, row, col)
 
 def game_on():
 	global root, Q_vals

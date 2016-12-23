@@ -1,1 +1,1 @@
-episode: 100 score: 0 avg score over 100: 14.5656565657 states: 575624
+episode: 1 score: 12 avg score over 100: 12.0 states: 1091866
